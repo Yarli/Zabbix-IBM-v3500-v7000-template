@@ -1,0 +1,1 @@
+# Zabbix-IBM-v3500-v7000-template
