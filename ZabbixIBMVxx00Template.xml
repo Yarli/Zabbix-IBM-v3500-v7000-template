@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <zabbix_export>
-    <version>5.0</version>
-    <date>2021-06-03T21:41:42Z</date>
+    <version>6.0</version>
+    <date>2023-04-12T14:53:32Z</date>
     <groups>
         <group>
+            <uuid>7df96b18c230490a9a0a9e2307226338</uuid>
             <name>Templates</name>
         </group>
     </groups>
     <templates>
         <template>
+            <uuid>2d9fe0e6d6c5447791493faa98298919</uuid>
             <template>Template IBM V7000</template>
             <name>Template IBM V7000</name>
             <groups>
@@ -16,37 +18,9 @@
                     <name>Templates</name>
                 </group>
             </groups>
-            <applications>
-                <application>
-                    <name>Array</name>
-                </application>
-                <application>
-                    <name>Batteries</name>
-                </application>
-                <application>
-                    <name>Disks</name>
-                </application>
-                <application>
-                    <name>Enclosure</name>
-                </application>
-                <application>
-                    <name>Log</name>
-                </application>
-                <application>
-                    <name>PSU</name>
-                </application>
-                <application>
-                    <name>Resumen</name>
-                </application>
-                <application>
-                    <name>SlotDrives</name>
-                </application>
-                <application>
-                    <name>VDisk</name>
-                </application>
-            </applications>
             <items>
                 <item>
+                    <uuid>230688357feb442ebf19deaccf932dde</uuid>
                     <name>ErrorLog</name>
                     <type>EXTERNAL</type>
                     <key>v3700_status.sh[{$CABIP1},{$CABUSER},{$CABPASS},logerrorall]</key>
@@ -54,13 +28,15 @@
                     <history>1d</history>
                     <trends>0</trends>
                     <value_type>LOG</value_type>
-                    <applications>
-                        <application>
-                            <name>Log</name>
-                        </application>
-                    </applications>
+                    <tags>
+                        <tag>
+                            <tag>Application</tag>
+                            <value>Log</value>
+                        </tag>
+                    </tags>
                 </item>
                 <item>
+                    <uuid>35b8b582d5f84d37b42f0cefaaa2d3b2</uuid>
                     <name>Status</name>
                     <type>EXTERNAL</type>
                     <key>v3700_status.sh[{$CABIP1},{$CABUSER},{$CABPASS},logstatus]</key>
@@ -68,15 +44,17 @@
                     <history>1d</history>
                     <trends>0</trends>
                     <value_type>TEXT</value_type>
-                    <applications>
-                        <application>
-                            <name>Resumen</name>
-                        </application>
-                    </applications>
+                    <tags>
+                        <tag>
+                            <tag>Application</tag>
+                            <value>Resumen</value>
+                        </tag>
+                    </tags>
                 </item>
             </items>
             <discovery_rules>
                 <discovery_rule>
+                    <uuid>6b71dd0a230744679938b1b1ae9aa793</uuid>
                     <name>Discover Arrays</name>
                     <type>EXTERNAL</type>
                     <key>v3700_status.sh[{$CABIP1},{$CABUSER},{$CABPASS},discoverarrays]</key>
@@ -84,6 +62,7 @@
                     <lifetime>1d</lifetime>
                     <item_prototypes>
                         <item_prototype>
+                            <uuid>d4ae9c6b2d5e43f6a6174ba915420888</uuid>
                             <name>Array {#ARRAY_ID} Status</name>
                             <type>EXTERNAL</type>
                             <key>v3700_status.sh[{$CABIP1},{$CABUSER},{$CABPASS},lsarray,{#ARRAY_ID}]</key>
@@ -91,14 +70,16 @@
                             <history>1d</history>
                             <trends>0</trends>
                             <value_type>TEXT</value_type>
-                            <applications>
-                                <application>
-                                    <name>Array</name>
-                                </application>
-                            </applications>
+                            <tags>
+                                <tag>
+                                    <tag>Application</tag>
+                                    <value>Array</value>
+                                </tag>
+                            </tags>
                             <trigger_prototypes>
                                 <trigger_prototype>
-                                    <expression>{str(&quot;degraded&quot;)}=1</expression>
+                                    <uuid>d0c8f632f7014670a5611750a9a3844c</uuid>
+                                    <expression>find(/Template IBM V7000/v3700_status.sh[{$CABIP1},{$CABUSER},{$CABPASS},lsarray,{#ARRAY_ID}],,&quot;like&quot;,&quot;degraded&quot;)=1</expression>
                                     <name>Array {#ARRAY_ID} Fault</name>
                                     <priority>HIGH</priority>
                                 </trigger_prototype>
@@ -107,6 +88,7 @@
                     </item_prototypes>
                 </discovery_rule>
                 <discovery_rule>
+                    <uuid>1bf86775577340469d3733438a5b7185</uuid>
                     <name>Discover Drives</name>
                     <type>EXTERNAL</type>
                     <key>v3700_status.sh[{$CABIP1},{$CABUSER},{$CABPASS},discoverdrives]</key>
@@ -114,36 +96,44 @@
                     <lifetime>1d</lifetime>
                     <item_prototypes>
                         <item_prototype>
+                            <uuid>a4792864579d4bd294a3e5c2161f9da6</uuid>
                             <name>Drive Status - Enclosure {#ENCLOSURE_ID}, Drive {#DRIVE_ID}</name>
+                            <type>EXTERNAL</type>
                             <key>v3700_status.sh[{$CABIP1},{$CABUSER},{$CABPASS},lsdrive,{#DRIVE_ID},{#ENCLOSURE_ID}]</key>
                             <trends>0</trends>
                             <value_type>TEXT</value_type>
-                            <applications>
-                                <application>
-                                    <name>Disks</name>
-                                </application>
-                            </applications>
+                            <tags>
+                                <tag>
+                                    <tag>Application</tag>
+                                    <value>Disks</value>
+                                </tag>
+                            </tags>
                             <trigger_prototypes>
                                 <trigger_prototype>
-                                    <expression>{str(&quot;degraded&quot;)}=1</expression>
+                                    <uuid>894cd02579d441af9e5e3770c2bd72d9</uuid>
+                                    <expression>find(/Template IBM V7000/v3700_status.sh[{$CABIP1},{$CABUSER},{$CABPASS},lsdrive,{#DRIVE_ID},{#ENCLOSURE_ID}],,&quot;like&quot;,&quot;degraded&quot;)=1</expression>
                                     <name>Drive Failure - Enclosure {#ENCLOSURE_ID}, Drive {#DRIVE_ID}</name>
                                     <priority>HIGH</priority>
                                 </trigger_prototype>
                             </trigger_prototypes>
                         </item_prototype>
                         <item_prototype>
+                            <uuid>6397d1f84f454384a6267b2a0c31379c</uuid>
                             <name>Drive Present - Enclosure {#ENCLOSURE_ID}, Drive {#DRIVE_ID}</name>
+                            <type>EXTERNAL</type>
                             <key>v3700_status.sh[{$CABIP1},{$CABUSER},{$CABPASS},lsenclosureslotextended,{#DRIVE_ID},{#ENCLOSURE_ID}]</key>
                             <trends>0</trends>
                             <value_type>TEXT</value_type>
-                            <applications>
-                                <application>
-                                    <name>Disks</name>
-                                </application>
-                            </applications>
+                            <tags>
+                                <tag>
+                                    <tag>Application</tag>
+                                    <value>Disks</value>
+                                </tag>
+                            </tags>
                             <trigger_prototypes>
                                 <trigger_prototype>
-                                    <expression>{str(&quot;no&quot;)}=1</expression>
+                                    <uuid>0762c2401cc2463d9353356170e33421</uuid>
+                                    <expression>find(/Template IBM V7000/v3700_status.sh[{$CABIP1},{$CABUSER},{$CABPASS},lsenclosureslotextended,{#DRIVE_ID},{#ENCLOSURE_ID}],,&quot;like&quot;,&quot;no&quot;)=1</expression>
                                     <name>Drive not present - Enclosure {#ENCLOSURE_ID}, Drive {#DRIVE_ID}</name>
                                     <priority>HIGH</priority>
                                 </trigger_prototype>
@@ -152,6 +142,7 @@
                     </item_prototypes>
                 </discovery_rule>
                 <discovery_rule>
+                    <uuid>ff6ab394bcd049bca1e0564c51d3636f</uuid>
                     <name>Discover Enclosures</name>
                     <type>EXTERNAL</type>
                     <key>v3700_status.sh[{$CABIP1},{$CABUSER},{$CABPASS},discoverenclosures]</key>
@@ -159,6 +150,7 @@
                     <lifetime>1d</lifetime>
                     <item_prototypes>
                         <item_prototype>
+                            <uuid>7729329da8f642fc91820634d229c97a</uuid>
                             <name>Enclosure Status - Enclosure {#ENCLOSURE_ID}</name>
                             <type>EXTERNAL</type>
                             <key>v3700_status.sh[{$CABIP1},{$CABUSER},{$CABPASS},lsenclosure,{#ENCLOSURE_ID}]</key>
@@ -166,20 +158,23 @@
                             <history>1d</history>
                             <trends>0</trends>
                             <value_type>TEXT</value_type>
-                            <applications>
-                                <application>
-                                    <name>Enclosure</name>
-                                </application>
-                            </applications>
+                            <tags>
+                                <tag>
+                                    <tag>Application</tag>
+                                    <value>Enclosure</value>
+                                </tag>
+                            </tags>
                             <trigger_prototypes>
                                 <trigger_prototype>
-                                    <expression>{str(&quot;degraded&quot;)}=1</expression>
+                                    <uuid>9bc0fa4aa1bf4b29be23b2f7ec7f1530</uuid>
+                                    <expression>find(/Template IBM V7000/v3700_status.sh[{$CABIP1},{$CABUSER},{$CABPASS},lsenclosure,{#ENCLOSURE_ID}],,&quot;like&quot;,&quot;degraded&quot;)=1</expression>
                                     <name>Enclosure Fault on Enclosure {#ENCLOSURE_ID}</name>
                                     <priority>HIGH</priority>
                                 </trigger_prototype>
                             </trigger_prototypes>
                         </item_prototype>
                         <item_prototype>
+                            <uuid>d1fcc3f058cb4d83a6b8889f5386be21</uuid>
                             <name>Battery Status - Enclosure {#ENCLOSURE_ID}, Battery 1</name>
                             <type>EXTERNAL</type>
                             <key>v3700_status.sh[{$CABIP1},{$CABUSER},{$CABPASS},lsenclosurebattery,{#ENCLOSURE_ID},1]</key>
@@ -187,20 +182,23 @@
                             <history>1d</history>
                             <trends>0</trends>
                             <value_type>TEXT</value_type>
-                            <applications>
-                                <application>
-                                    <name>Batteries</name>
-                                </application>
-                            </applications>
+                            <tags>
+                                <tag>
+                                    <tag>Application</tag>
+                                    <value>Batteries</value>
+                                </tag>
+                            </tags>
                             <trigger_prototypes>
                                 <trigger_prototype>
-                                    <expression>{str(&quot;offline&quot;)}=1</expression>
+                                    <uuid>323c5604190048d7bf06e320d9ab8c31</uuid>
+                                    <expression>find(/Template IBM V7000/v3700_status.sh[{$CABIP1},{$CABUSER},{$CABPASS},lsenclosurebattery,{#ENCLOSURE_ID},1],,&quot;like&quot;,&quot;offline&quot;)=1</expression>
                                     <name>Battery 1 Failure on Enclosure {#ENCLOSURE_ID}</name>
                                     <priority>HIGH</priority>
                                 </trigger_prototype>
                             </trigger_prototypes>
                         </item_prototype>
                         <item_prototype>
+                            <uuid>ba6d4afcb2e940e292af9e383433e870</uuid>
                             <name>Battery Status - Enclosure {#ENCLOSURE_ID}, Battery 2</name>
                             <type>EXTERNAL</type>
                             <key>v3700_status.sh[{$CABIP1},{$CABUSER},{$CABPASS},lsenclosurebattery,{#ENCLOSURE_ID},2]</key>
@@ -208,20 +206,23 @@
                             <history>1d</history>
                             <trends>0</trends>
                             <value_type>TEXT</value_type>
-                            <applications>
-                                <application>
-                                    <name>Batteries</name>
-                                </application>
-                            </applications>
+                            <tags>
+                                <tag>
+                                    <tag>Application</tag>
+                                    <value>Batteries</value>
+                                </tag>
+                            </tags>
                             <trigger_prototypes>
                                 <trigger_prototype>
-                                    <expression>{str(&quot;offline&quot;)}=1</expression>
+                                    <uuid>920c32a65af64816852ff1ba39938975</uuid>
+                                    <expression>find(/Template IBM V7000/v3700_status.sh[{$CABIP1},{$CABUSER},{$CABPASS},lsenclosurebattery,{#ENCLOSURE_ID},2],,&quot;like&quot;,&quot;offline&quot;)=1</expression>
                                     <name>Battery 2 Failure on Enclosure {#ENCLOSURE_ID}</name>
                                     <priority>HIGH</priority>
                                 </trigger_prototype>
                             </trigger_prototypes>
                         </item_prototype>
                         <item_prototype>
+                            <uuid>d24b2d8de6c1479c85e90acd4729a399</uuid>
                             <name>Canister Status - Enclosure {#ENCLOSURE_ID}, Canister 1</name>
                             <type>EXTERNAL</type>
                             <key>v3700_status.sh[{$CABIP1},{$CABUSER},{$CABPASS},lsenclosurecanister,{#ENCLOSURE_ID},1]</key>
@@ -229,20 +230,23 @@
                             <history>1d</history>
                             <trends>0</trends>
                             <value_type>TEXT</value_type>
-                            <applications>
-                                <application>
-                                    <name>Enclosure</name>
-                                </application>
-                            </applications>
+                            <tags>
+                                <tag>
+                                    <tag>Application</tag>
+                                    <value>Enclosure</value>
+                                </tag>
+                            </tags>
                             <trigger_prototypes>
                                 <trigger_prototype>
-                                    <expression>{str(&quot;offline&quot;)}=1</expression>
+                                    <uuid>be0007de276748eeb892b522cc75a9e2</uuid>
+                                    <expression>find(/Template IBM V7000/v3700_status.sh[{$CABIP1},{$CABUSER},{$CABPASS},lsenclosurecanister,{#ENCLOSURE_ID},1],,&quot;like&quot;,&quot;offline&quot;)=1</expression>
                                     <name>Canister 1 Failure on Enclosure {#ENCLOSURE_ID}</name>
                                     <priority>HIGH</priority>
                                 </trigger_prototype>
                             </trigger_prototypes>
                         </item_prototype>
                         <item_prototype>
+                            <uuid>68654026acf242f3bb49db277f7788e9</uuid>
                             <name>Canister Status - Enclosure {#ENCLOSURE_ID}, Canister 2</name>
                             <type>EXTERNAL</type>
                             <key>v3700_status.sh[{$CABIP1},{$CABUSER},{$CABPASS},lsenclosurecanister,{#ENCLOSURE_ID},2]</key>
@@ -250,20 +254,23 @@
                             <history>1d</history>
                             <trends>0</trends>
                             <value_type>TEXT</value_type>
-                            <applications>
-                                <application>
-                                    <name>Enclosure</name>
-                                </application>
-                            </applications>
+                            <tags>
+                                <tag>
+                                    <tag>Application</tag>
+                                    <value>Enclosure</value>
+                                </tag>
+                            </tags>
                             <trigger_prototypes>
                                 <trigger_prototype>
-                                    <expression>{str(&quot;offline&quot;)}=1</expression>
+                                    <uuid>71034ff07bc2464cb77995e586f17a48</uuid>
+                                    <expression>find(/Template IBM V7000/v3700_status.sh[{$CABIP1},{$CABUSER},{$CABPASS},lsenclosurecanister,{#ENCLOSURE_ID},2],,&quot;like&quot;,&quot;offline&quot;)=1</expression>
                                     <name>Canister 2 Failure on Enclosure {#ENCLOSURE_ID}</name>
                                     <priority>HIGH</priority>
                                 </trigger_prototype>
                             </trigger_prototypes>
                         </item_prototype>
                         <item_prototype>
+                            <uuid>1f1cf5161dc447ad9dd937aca65dfa3d</uuid>
                             <name>PSU Status - Enclosure {#ENCLOSURE_ID}, PSU 1</name>
                             <type>EXTERNAL</type>
                             <key>v3700_status.sh[{$CABIP1},{$CABUSER},{$CABPASS},lsenclosurepsu,{#ENCLOSURE_ID},1]</key>
@@ -271,20 +278,23 @@
                             <history>1d</history>
                             <trends>0</trends>
                             <value_type>TEXT</value_type>
-                            <applications>
-                                <application>
-                                    <name>PSU</name>
-                                </application>
-                            </applications>
+                            <tags>
+                                <tag>
+                                    <tag>Application</tag>
+                                    <value>PSU</value>
+                                </tag>
+                            </tags>
                             <trigger_prototypes>
                                 <trigger_prototype>
-                                    <expression>{str(&quot;offline&quot;)}=1</expression>
+                                    <uuid>e5304b4ca598418db712906da24b6ce7</uuid>
+                                    <expression>find(/Template IBM V7000/v3700_status.sh[{$CABIP1},{$CABUSER},{$CABPASS},lsenclosurepsu,{#ENCLOSURE_ID},1],,&quot;like&quot;,&quot;offline&quot;)=1</expression>
                                     <name>PSU 1 Failure on Enclosure {#ENCLOSURE_ID}</name>
                                     <priority>HIGH</priority>
                                 </trigger_prototype>
                             </trigger_prototypes>
                         </item_prototype>
                         <item_prototype>
+                            <uuid>dd6d68772a284021a1a1e59ded621c07</uuid>
                             <name>PSU Status - Enclosure {#ENCLOSURE_ID}, PSU 2</name>
                             <type>EXTERNAL</type>
                             <key>v3700_status.sh[{$CABIP1},{$CABUSER},{$CABPASS},lsenclosurepsu,{#ENCLOSURE_ID},2]</key>
@@ -292,14 +302,16 @@
                             <history>1d</history>
                             <trends>0</trends>
                             <value_type>TEXT</value_type>
-                            <applications>
-                                <application>
-                                    <name>PSU</name>
-                                </application>
-                            </applications>
+                            <tags>
+                                <tag>
+                                    <tag>Application</tag>
+                                    <value>PSU</value>
+                                </tag>
+                            </tags>
                             <trigger_prototypes>
                                 <trigger_prototype>
-                                    <expression>{str(&quot;offline&quot;)}=1</expression>
+                                    <uuid>25031467092b4d9d851fc5c101070ee5</uuid>
+                                    <expression>find(/Template IBM V7000/v3700_status.sh[{$CABIP1},{$CABUSER},{$CABPASS},lsenclosurepsu,{#ENCLOSURE_ID},2],,&quot;like&quot;,&quot;offline&quot;)=1</expression>
                                     <name>PSU 2 Failure on Enclosure {#ENCLOSURE_ID}</name>
                                     <priority>HIGH</priority>
                                 </trigger_prototype>
@@ -308,6 +320,7 @@
                     </item_prototypes>
                 </discovery_rule>
                 <discovery_rule>
+                    <uuid>f24df71d4f3b41f6a12342ddcf3bf194</uuid>
                     <name>Discover vDisks</name>
                     <type>EXTERNAL</type>
                     <key>v3700_status.sh[{$CABIP1},{$CABUSER},{$CABPASS},discovervdisks]</key>
@@ -315,19 +328,23 @@
                     <lifetime>1d</lifetime>
                     <item_prototypes>
                         <item_prototype>
+                            <uuid>82de2da3d8cb42b0bc69103c0a132125</uuid>
                             <name>vDisk [{#VDISK_NAME}] Status</name>
+                            <type>EXTERNAL</type>
                             <key>v3700_status.sh[{$CABIP1},{$CABUSER},{$CABPASS},lsvdisk,{#VDISK_ID}]</key>
                             <delay>30</delay>
                             <trends>0</trends>
                             <value_type>TEXT</value_type>
-                            <applications>
-                                <application>
-                                    <name>VDisk</name>
-                                </application>
-                            </applications>
+                            <tags>
+                                <tag>
+                                    <tag>Application</tag>
+                                    <value>VDisk</value>
+                                </tag>
+                            </tags>
                             <trigger_prototypes>
                                 <trigger_prototype>
-                                    <expression>{str(&quot;degraded&quot;)}=1</expression>
+                                    <uuid>acdfce532105475d8c43afb689f14aa6</uuid>
+                                    <expression>find(/Template IBM V7000/v3700_status.sh[{$CABIP1},{$CABUSER},{$CABPASS},lsvdisk,{#VDISK_ID}],,&quot;like&quot;,&quot;degraded&quot;)=1</expression>
                                     <name>vDisk {#VDISK_NAME} Fault</name>
                                     <priority>HIGH</priority>
                                 </trigger_prototype>
